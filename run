@@ -1,0 +1,5 @@
+#!/bin/bash
+
+moonc .
+love .
+find . -type f -name '*.lua' -delete
