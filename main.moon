@@ -1,3 +1,5 @@
+m = require "moon"
+export dump = m.p
 assert require "MeowUI"
 
 
@@ -6,15 +8,18 @@ Content = assert require "MeowUI.Controls.Content"
 Graphics = love.graphics
 
 
+-- Examples
+panel = assert require "examples.small_panel"
+
 with love
   .load = ->
-
+    panel.new "", {290, 300}, {250, 125}
     Graphics.setBackgroundColor 0.2, 0.2, 0.2
 
     export manager = MeowUI.manager
     root = manager\getRoot!
 
-    content = Content!
+    content = Content ""
     button_ex1_1 = Button "Box"
     button_ex1_2 = Button "Box"
     button_ex2_1 = Button "Circle"
@@ -59,7 +64,7 @@ with love
     with button_ex1_2
       \setPosition 30, 40
       \setSize 60, 60
-      \setText "Button"
+      \setText "×"
 
     with button_ex2_1
       \setPosition 70, 75
@@ -106,10 +111,8 @@ with love
   .mousepressed = (x, y, button) ->
     manager\mousepressed x, y, button
 
-
   .keypressed = (key, is_r) ->
     manager\keypressed key, is_r
-
 
   .mousemoved = (x, y, dx, dy, istouch ) ->
     manager\mousemoved x, y, dx, dy, istouch

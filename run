@@ -2,4 +2,4 @@
 
 moonc .
 love .
-find . -type f -name '*.lua' -delete
+find . -type f -name '*.lua' -not -path "./MeowUI/src/ThirdParty/*"  -delete
