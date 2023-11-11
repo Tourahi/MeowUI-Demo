@@ -12,21 +12,20 @@ with Panel
     contentArea = Content "Panel_cntnt"
     toolbar = Content "Panel_bar"
     closeBtn = Button "Box"
-    toolbarTitle = Label 14, "Debug"
+    toolbarTitle = Label 14, name
     toolbarH = 25
     txt = TextInput!
     
     with contentArea
-      \setPosition pos[1], pos[1]
+      \setPosition pos[1], pos[2]
       \setSize size[1], size[2]
-      \onUpdate ->
-        print contentArea.isPressed
-
+      \setDepth 20
 
     with toolbar
       \setPosition 0, 0
       \setSize size[1], toolbarH
       \setBackgroundColor {0.161, 0.29, 0.478}
+      \setDrag false, false
 
     with toolbarTitle
       \setPosition 5, 5
@@ -45,7 +44,6 @@ with Panel
     contentArea\addSlideChild 1, toolbar
 
     root\addChild contentArea
-    root\addChild txt
 
 
 
