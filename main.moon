@@ -1,25 +1,62 @@
 m = require "moon"
 export dump = m.p
 assert require "MeowUI"
-
-
-Button = assert require MeowUI.c_cwd .."Button"
-Content = assert require "MeowUI.Controls.Content"
 Graphics = love.graphics
 
 
 -- Examples
-panel = assert require "examples.small_panel"
+Frame = assert require MeowUI.c_cwd .. "Frame"
+Label = assert require MeowUI.c_cwd .. "Label"
+Content = assert require MeowUI.c_cwd .. "Content"
+Button = assert require MeowUI.c_cwd .. "Button"
+
+
+manager = MeowUI.manager
+root = manager\getRoot!
+
+initExamplesList = ->
+  content = Content "Examples"
+  title = Label nil, "Examples"
+  controls = {
+    "Frame"
+  }
+  
+
+  with content
+    \setPosition Graphics.getWidth! - 200, 0
+    \setEnabled true
+    \setSize 200, Graphics.getHeight!
+
+  with title
+    \setPosition 65, 5
+
+  offset = 30
+  for k, v in ipairs controls
+    btn = Button "Box"
+    offset += 45
+    with btn
+      \setPosition 45, offset
+      \setSize 110, 35
+      \setText v
+    controls[k] = {v, btn}
+
+    controls[1][2]\onClick ->
+      p = Frame "frame", false, false
+      with p
+        \setSize 200, 100
+        \setPosition 200, 200
+      root\addChild p
+
+    content\addChild btn
+
+  content\addChild title
+  root\addChild content
+
 
 with love
   .load = ->
-    panel.new "Examples", {love.graphics.getWidth! - 250, 0}, {250, love.graphics.getHeight!}
-
+    initExamplesList!
     Graphics.setBackgroundColor 0.2, 0.2, 0.2
-
-    export manager = MeowUI.manager
-
-
 
   .update = (dt) ->
     manager\update dt
