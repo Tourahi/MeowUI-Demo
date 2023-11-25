@@ -16,7 +16,7 @@ root = manager\getRoot!
 
 initExamplesList = ->
   content = Content "Examples"
-  title = Label nil, "Examples"
+  title = Label MeowUI.assets .. "SAIBA-45-Outline.ttf", "Examples", nil, 25
   controls = {
     "Frame"
   }
@@ -28,15 +28,16 @@ initExamplesList = ->
     \setSize 200, Graphics.getHeight!
 
   with title
-    \setPosition 65, 5
+    \setPosition 30, 5
+    \setColor {0, 0.8, 1, 1}
 
-  offset = 30
+  offset = 0
   for k, v in ipairs controls
     btn = Button "Box"
     offset += 45
     with btn
-      \setPosition 45, offset
-      \setSize 110, 35
+      \setPosition 10, offset
+      \setSize 180, 35
       \setText v
     controls[k] = {v, btn}
 
