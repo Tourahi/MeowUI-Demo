@@ -39,6 +39,7 @@ initExamplesList = ->
       \setPosition 10, offset
       \setSize 180, 35
       \setText v
+      \setFocusEnabled false
     controls[k] = {v, btn}
 
     controls[1][2]\onClick ->
