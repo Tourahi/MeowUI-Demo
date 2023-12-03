@@ -14,11 +14,63 @@ Button = assert require MeowUI.c_cwd .. "Button"
 manager = MeowUI.manager
 root = manager\getRoot!
 
+
+initFrameEx = (controls) ->
+  controls[1][2]\onClick ->
+    p = Frame "Frame", false, false
+    with p
+      \setSize 200, 100
+      \setPosition 200, 200
+    root\addChild p
+
+initBtnEx = (controls) ->
+  controls[2][2]\onClick ->
+    p = Frame "Button", false, false
+    b = Button "Circle"
+    bLogo = Button "Circle"
+    bRec = Button "Box"
+    bPoly = Button "Polygon"
+
+    with p
+      \setSize 200, 100
+      \setPosition 200, 200
+
+    with b
+      \setPosition 190, 90
+      \setRadius 4.5
+      \onClick ->
+        bPoly\setSides bPoly\getSides! + 1
+
+    with bLogo
+      \setPosition 40, 65
+      \setImage MeowUI.assets .. "Logo.png", true
+      \setStroke 1
+
+    with bRec
+      \setPosition 80, 40
+      \setSize 45, 45
+
+    with bPoly
+      \setPosition 155, 65
+      \setRadius 25
+      
+    p\addChild b
+    p\addChild bLogo
+    p\addChild bRec
+    p\addChild bPoly
+
+    root\addChild p
+
+
 initExamplesList = ->
   content = Content "Examples"
   title = Label MeowUI.assets .. "SAIBA-45-Outline.ttf", "Examples", nil, 25
   controls = {
-    "Frame"
+    "Frame",
+    "Button",
+    "checkBox",
+    "Label",
+    "TextInput",
   }
   
 
@@ -41,15 +93,12 @@ initExamplesList = ->
       \setText v
       \setFocusEnabled false
     controls[k] = {v, btn}
-
-    controls[1][2]\onClick ->
-      p = Frame "frame", false, false
-      with p
-        \setSize 200, 100
-        \setPosition 200, 200
-      root\addChild p
-
     content\addChild btn
+
+  
+  initFrameEx controls
+  initBtnEx controls
+
 
   content\addChild title
   root\addChild content
