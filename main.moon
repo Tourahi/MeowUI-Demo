@@ -10,96 +10,82 @@ Label = assert require MeowUI.c_cwd .. "Label"
 Content = assert require MeowUI.c_cwd .. "Content"
 Button = assert require MeowUI.c_cwd .. "Button"
 
-
 manager = MeowUI.manager
 root = manager\getRoot!
 
+-- These will show in the panel as btns.
+G_controls = {
+  "Frame",
+  "Button",
+  "checkBox",
+  "Label",
+  "TextInput",
+}
 
-initFrameEx = (controls) ->
-  controls[1][2]\onClick ->
+initFrameEx = ->
+  G_controls[1][2]\onClick ->
     p = Frame "Frame", false, false
     with p
       \setSize 200, 100
       \setPosition 200, 200
     root\addChild p
 
-initBtnEx = (controls) ->
-  controls[2][2]\onClick ->
-    p = Frame "Button", false, false
-    b = Button "Circle"
-    bLogo = Button "Circle"
-    bRec = Button "Box"
-    bPoly = Button "Polygon"
+initBtnEx = ->
+  G_controls[2][2]\onClick ->
+    bPoly = with Button "Polygon"
+      \setPosition 155, 65
+      \setRadius 25
 
-    with p
-      \setSize 200, 100
-      \setPosition 200, 200
-
-    with b
+    b = with Button "Circle"
       \setPosition 190, 90
       \setRadius 4.5
       \onClick ->
         bPoly\setSides bPoly\getSides! + 1
 
-    with bLogo
+    bLogo = with Button "Circle"
       \setPosition 40, 65
       \setImage MeowUI.assets .. "Logo.png", true
       \setStroke 1
 
-    with bRec
+    bRec = with Button "Box"
       \setPosition 80, 40
       \setSize 45, 45
 
-    with bPoly
-      \setPosition 155, 65
-      \setRadius 25
-      
-    p\addChild b
-    p\addChild bLogo
-    p\addChild bRec
-    p\addChild bPoly
+    p = with Frame "Button", false, false
+      \setSize 200, 100
+      \setPosition 200, 200
+      \addChild b
+      \addChild bLogo
+      \addChild bRec
+      \addChild bPoly
 
     root\addChild p
 
-
 initExamplesList = ->
-  content = Content "Examples"
-  title = Label MeowUI.assets .. "SAIBA-45-Outline.ttf", "Examples", nil, 25
-  controls = {
-    "Frame",
-    "Button",
-    "checkBox",
-    "Label",
-    "TextInput",
-  }
-  
-
-  with content
+  content = with Content "Examples"
     \setPosition Graphics.getWidth! - 200, 0
     \setEnabled true
     \setSize 200, Graphics.getHeight!
 
-  with title
+  title = with Label MeowUI.assets .. "SAIBA-45-Outline.ttf", "Examples", nil, 25
     \setPosition 30, 5
     \setColor {0, 0.8, 1, 1}
 
-  offset = 0
-  for k, v in ipairs controls
-    btn = Button "Box"
-    offset += 45
-    with btn
+  offset = 45
+  for k, v in ipairs G_controls
+    btn = with Button "Box"
       \setPosition 10, offset
       \setSize 180, 35
       \setText v
       \setFocusEnabled false
-    controls[k] = {v, btn}
+    
+    offset += 45
+    G_controls[k] = {v, btn}
     content\addChild btn
-
   
-  initFrameEx controls
-  initBtnEx controls
-
-
+  initFrameEx!
+  initBtnEx!
+  
   content\addChild title
   root\addChild content
 
